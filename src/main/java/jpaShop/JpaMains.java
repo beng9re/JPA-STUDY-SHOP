@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import jpaShop.domain.Book;
 import jpaShop.domain.Delivery;
 import jpaShop.domain.Member;
 import jpaShop.domain.Orders;
@@ -34,6 +35,11 @@ public class JpaMains {
             delivery.setStatus("배송");
             em.persist(delivery);
 
+            Book book = new Book();
+            book.setName("p");
+            book.setAuthor("kim");
+            em.persist(book);
+
 
             Orders orders = new Orders();
             orders.setDelivery(delivery);
@@ -42,13 +48,6 @@ public class JpaMains {
             orders.setOrderDate(LocalDateTime.now());
 
             em.persist(orders);
-
-
-
-
-
-
-
 
             tx.commit();
 

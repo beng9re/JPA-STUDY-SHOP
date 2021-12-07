@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,20 +19,27 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Orders {
-	@GeneratedValue
+
 	@Id
+	@GeneratedValue
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MEMBER_ID")
 	private Member member;
 
-	@OneToOne
+	//오더를 저장할때 자동으로 저장
+	@OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	@JoinColumn(name = "DELIVERY_ID")
 	private Delivery delivery;
 
-	@OneToMany(mappedBy = "orders")
+	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
+
+	public void addOrderItem(OrderItem orderItem) {
+		orderItems.add(orderItem);
+		setOrderItems(orderItems);
+	}
 
 	private LocalDateTime orderDate;
 

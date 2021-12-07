@@ -4,21 +4,24 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class OrderItem {
+public class OrderItem extends BaseEntity{
 	@GeneratedValue
 	@Id
 	private Long id;
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORDER_ID") // 조인컬럼의네임은 FK의 이름임
 	private Orders orders;
 
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ITEM_ID")
 	private Item item;
 	private BigDecimal orderPrice;
