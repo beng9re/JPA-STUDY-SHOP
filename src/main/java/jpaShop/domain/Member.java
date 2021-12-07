@@ -2,6 +2,7 @@ package jpaShop.domain;
 
 import java.util.List;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,11 +14,12 @@ public class Member {
 	@GeneratedValue
 	private Long id;
 	private String name;
-	private String Street;
-	private String zipCode;
 
 	@OneToMany(mappedBy = "member")
 	private List<Orders> ordersList;
+
+	@Embedded
+	private Addrss addrss;
 
 	public Long getId() {
 		return id;
@@ -35,21 +37,7 @@ public class Member {
 		this.name = name;
 	}
 
-	public String getStreet() {
-		return Street;
-	}
 
-	public void setStreet(String street) {
-		Street = street;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
 
 
 }
